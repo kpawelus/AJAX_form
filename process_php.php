@@ -1,5 +1,5 @@
 <?php 
-	include "db4.php";
+	include "db.php";
 	
 	if(isset($_REQUEST['submit_form'])) {
 		echo "The form has been submitted. $_REQUEST[name]";
