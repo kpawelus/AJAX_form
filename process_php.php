@@ -3,6 +3,10 @@
 	
 	if(isset($_REQUEST['submit_form'])) {
 		echo "The form has been submitted. $_REQUEST[name]";
+		//inserting info into servers database
+		$ins_sql = "INSERT INTO users (u_name, u_email, u_number, u_number) VALUES ('$_REQUEST[name]', '$_REQUEST[email]', '$_REQUEST[contact_number]', '$_REQUEST[notes]')";
+		//run this code on server
+		$run_sql = mysqli_query($conn, $ins_sql);
 	}
 	
 	$sql = "SELECT * FROM learning_ajax";
