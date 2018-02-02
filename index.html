@@ -8,6 +8,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 		<script>
+			//taking data form database
 			function ajax_func() {
 				xmlhttp = new XMLHttpRequest();
 
@@ -21,6 +22,7 @@
 				xmlhttp.send();
 			}
 			
+			//replacing or just adding new data to database and actual form
 			function submit_form() {
 				var clear_form = document.getElementById('form_clear');
 			
@@ -29,7 +31,7 @@
 				contact_number = document.getElementById('contact_number').value,
 				notes = document.getElementById('notes').value;
 				
-				//Ajax processing
+				//ajax processing
 				xmlhttp.onreadystatechange = function() {
 					if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 						document.getElementById('ret_data').innerHTML = xmlhttp.responseText;
@@ -38,7 +40,7 @@
 				
 				xmlhttp.open('GET', 'process_php.php?submit_form=yes&name='+name+'&email='+email+'&contact_number='+contact_number+'&notes='+notes, true);
 				xmlhttp.send();
-				//Ajax ends here
+				//ajax ends here
 			
 				//close modal after submitting new data
 				$('add_new_person').modal('hide');
@@ -46,6 +48,18 @@
 				//clear form after submitting for next portion of data 
 				clear_form.reset();
 				return false;
+			}
+			
+			//deleting data form the database
+			function delete_func (user_id) {
+				xmlhttp.onreadystatechange = function () {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						document.getElementById('ret_data').innerHTML = xmlhttp.responseText;
+					}
+				}
+				
+				xmlhttp.open('GET', 'process_php.php?del_id='+user_id, true);
+				xmlhttp.send();
 			}
 		</script>
 	</head>
