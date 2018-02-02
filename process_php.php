@@ -26,8 +26,18 @@
 				<td>$rows[u_number]</td>
 				<td>$rows[u_notes]</td>
 				<td>
-					<button class='btn btn-success'>Edit</button>
+					<button class='btn btn-success' data-toggle='modal' data-target='#edit_elem$c'>Edit</button>
 					<button class='btn btn-danger' onclick=delete_func('$rows[u_id]');>Delete</button>
+					
+					<div class='modal fade' id='edit_elem$c'>
+						<div class='modal-dialog'>
+							<div class='modal-content'>
+								<div class='modal-header'></div>
+								<div class='modal-body'></div>
+								<div class='modal-footer'></div>
+							<div>
+						</div>
+					</div>
 				</td>
 			</tr>
 		";
