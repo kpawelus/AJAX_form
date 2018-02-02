@@ -22,6 +22,8 @@
 			}
 			
 			function submit_form() {
+				var clear_form = document.getElementById('form_clear');
+			
 				var name = document.getElementById('name').value,
 				email = document.getElementById('email').value,
 				contact_number = document.getElementById('contact_number').value,
@@ -37,7 +39,12 @@
 				xmlhttp.open('GET', 'process_php.php?submit_form=yes&name='+name+'&email='+email+'&contact_number='+contact_number+'&notes='+notes, true);
 				xmlhttp.send();
 				//Ajax ends here
-
+			
+				//close modal after submitting new data
+				$('add_new_person').modal('hide');
+				
+				//clear form after submitting for next portion of data 
+				clear_form.reset();
 				return false;
 			}
 		</script>
@@ -55,18 +62,18 @@
 							<!--<button type="button" class="close" data-dismiss="modal">&times;</button> optional element, but we have already close button-->
 						</div>
 						<div class="modal-body">
-							<form onsubmit="return submit_form();">
+							<form onsubmit="return submit_form();" id="form_clear">
 								<div class="form-group">
 									<label>Provide new name</label>
-									<input type="text" id="name" class="form-control"></input>
+									<input type="text" id="name" class="form-control" required></input>
 								</div>
 								<div class="form-group">
 									<label>Provide new e-mail</label>
-									<input type="email" id="email" class="form-control"></input> 
+									<input type="email" id="email" class="form-control" required></input> 
 								</div>
 								<div class="form-group">
 									<label>Provide new contact number</label>
-									<input type="text" id="contact_number" class="form-control"></input>
+									<input type="text" id="contact_number" class="form-control" required></input>
 								</div>
 								<div class="form-group">
 									<label>Provide notes</label>
