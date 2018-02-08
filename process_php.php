@@ -1,5 +1,5 @@
 <?php 
-	include "db.php";
+	include "database.php";
 	
 	if(isset($_REQUEST['submit_form'])) {
 		//inserting info into servers database
@@ -20,15 +20,16 @@
 		echo " 
 			<tr>
 				<td>$c</td>
+				<td>$rows[u_id]</td>
 				<td>$rows[u_name]</td>
 				<td>$rows[u_email]</td>
 				<td>$rows[u_number]</td>
 				<td>$rows[u_notes]</td>
-				<td class='text-left'>
-					<button class='btn btn-success' data-toggle='modal' data-target='#edit_elem$c' data-backdrop='static'>Edit</button>
+				<td>
+					<button class='btn btn-success' data-toggle='modal' data-target='#edit_elem$rows[u_id]' data-backdrop='static'>Edit</button>
 					<button class='btn btn-danger' onclick=delete_func('$rows[u_id]');>Delete</button>
 					
-					<div class='modal fade' id='edit_elem$c'>
+					<div class='modal fade text-left' id='edit_elem$rows[u_id]'>
 						<div class='modal-dialog'>
 							<div class='modal-content'>
 								<div class='modal-header'>
@@ -36,22 +37,21 @@
 									<button type='button' class='close' data-dismiss='modal'>&times;</button>
 								</div>
 								<div class='modal-body'>
-									<form onsubmit='edit_form();' id='form_clear'>
+									<form onsubmit='return edit_func($rows[u_id]);' id='form_clear'>
 										<div class='form-group'>
-											<label>Provide new name</label>
+											<label>Change name</label>
 											<input type='text' id='edit_name' class='form-control' required></input>
 										</div>
 										<div class='form-group'>
-											<label>Provide new e-mail</label>
+											<label>Change e-mail</label>
 											<input type='email' id='edit_email' class='form-control' required></input> 
 										</div>
 										<div class='form-group'>
-											<label>Provide new contact number</label>
+											<label>Change contact number</label>
 											<input type='text' id='edit_contact_number' class='form-control' required></input>
 										</div>
 										<div class='form-group'>
-											<label>Provide notes</label>
-											<!-- you can put <input type='text'></input> or textarea like below-->
+											<label>Change notes</label>
 											<textarea class='form-control' id='edit_notes'></textarea>
 										</div>
 										<div class='form-group'>
