@@ -61,6 +61,11 @@
 				xmlhttp.open('GET', 'process_php.php?del_id='+user_id, true);
 				xmlhttp.send();
 			}
+			
+			//editing data directly from form in database and in form
+			function edit_form() {
+				
+			}
 		</script>
 	</head>
 	<body onload="ajax_func();">
@@ -72,7 +77,7 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5>Add new person</h5>
+							<h4>Add new person</h4>
 							<!--<button type="button" class="close" data-dismiss="modal">&times;</button> optional element, but we have already close button-->
 						</div>
 						<div class="modal-body">
