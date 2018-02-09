@@ -23,7 +23,7 @@
 			}
 			
 			//replacing or just adding new data to database and actual form
-			function submit_form() {
+			function submit_func() {
 				var clear_form = document.getElementById('form_clear');
 			
 				var name = document.getElementById('name').value,
@@ -43,7 +43,7 @@
 				//ajax ends here
 			
 				//close modal after submitting new data
-				$('add_new_person').modal('hide');
+				$('#add_new_person').modal('hide');
 				
 				//clear form after submitting for next portion of data 
 				clear_form.reset();
@@ -58,17 +58,23 @@
 					}
 				}
 				
-				xmlhttp.open('GET', 'process_php.php?del_id='+delete_id, true);
+				xmlhttp.open('GET', 'process_php.php?delete_form='+delete_id, true);
 				xmlhttp.send();
 			}
 			
 			//editing data directly from form in database and in form
 			function edit_func(edit_id) {
-				var edit_name = document.getElementById('edit_name').value,
-					   edit_email = document.getElementById('edit_email').value,
-					   edit_contactnumber = document.getElementById('edit_contact_number').value,
-					   edit_notes = document.getElementById('edit_notes').value;
+				var reset_edit_form = document.getElementById('reseting_edit_form'+edit_id);
+				var edit_name = document.getElementById('edit_name'+edit_id).value,
+					   edit_email = document.getElementById('edit_email'+edit_id).value,
+					   edit_contactnumber = document.getElementById('edit_contact_number'+edit_id).value,
+					   edit_notes = document.getElementById('edit_notes'+edit_id).value;
 					   
+				xmlhttp.open('GET', 'process_php.php?edit_form=yes&edit_id'+edit_id+'&edit_name'+edit_name+'&edit_email'+edit_email+'&edit_contact_number'+edit_contactnumber+'&edit_notes'+edit_notes, true);
+				xmlhttp.send();
+				
+				$('#edit_elem'+edit_id).modal('hide');
+				reset_edit_form.reset();
 				return false;
 			}
 		</script>
@@ -86,7 +92,7 @@
 							<!--<button type="button" class="close" data-dismiss="modal">&times;</button> optional element, but we have already close button-->
 						</div>
 						<div class="modal-body">
-							<form onsubmit="return submit_form();" id="form_clear">
+							<form onsubmit="return submit_func();" id="form_clear">
 								<div class="form-group">
 									<label>Provide new name</label>
 									<input type="text" id="name" class="form-control" required></input>

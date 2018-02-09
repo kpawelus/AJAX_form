@@ -2,15 +2,31 @@
 	include "database.php";
 	
 	if(isset($_REQUEST['submit_form'])) {
-		//inserting info into servers database
-		$ins_sql = "INSERT INTO learning_ajax (u_name, u_email, u_number, u_number) VALUES ('$_REQUEST[name]', '$_REQUEST[email]', '$_REQUEST[contact_number]', '$_REQUEST[notes]')";
+		//securing form form sql injection
+		$username = mysqli_real_escape_string($conn, strip_tags($_REQUEST['name']));
+		$email = mysqli_real_escape_string($conn, strip_tags($_REQUEST['email']));
+		$contactnumber = mysqli_real_escape_string($conn, strip_tags($_REQUEST['contact_number']));
+		$notes =  mysqli_real_escape_string($conn, strip_tags($_REQUEST['notes']));
+		//inserting info into servers database (variables taken from above)
+		$ins_sql = "INSERT INTO learning_ajax (u_name, u_email, u_number, u_number) VALUES ('$username', '$email ', '$contactnumber', '$notes')";
 		//run this code on server
 		$run_sql = mysqli_query($conn, $ins_sql);
 	}
 	
-	if(isset($_REQUEST['del_id'])) {
-		$del_sql = "DELETE FROM learning_ajax WHERE u_id = '$_REQUEST[del_id]'";
+	if(isset($_REQUEST['delete_form'])) {
+		$del_sql = "DELETE FROM learning_ajax WHERE u_id = '$_REQUEST[delete_form]'";
 		$del_run = mysqli_query($conn, $del_sql);
+	}
+	
+	if(isset($_REQUEST['edit_form'])) {
+		//securing form form sql injection
+		$edit_username =  mysqli_real_escape_string($conn, strip_tags($_REQUEST['edit_name']));
+		$edit_email =  mysqli_real_escape_string($conn, strip_tags($_REQUEST['edit_email']));
+		$edit_contactnumber =  mysqli_real_escape_string($conn, strip_tags($_REQUEST['edit_contact_number']));
+		$edit_notes =  mysqli_real_escape_string($conn, strip_tags($_REQUEST['edit_notes']));
+		//changing info in servers database (variables taken from above)
+		$edit_sql = "UPDATE learning_ajax SET u_name = '$edit_username', u_email = '$edit_email', u_number = '$edit_contactnumber', u_notes = '$edit_notes' WHERE u_id = '$_REQUEST[edit_id]'";
+		$edit_run = mysqli_query($conn, $edit_sql);
 	}
 	
 	$sql = "SELECT * FROM learning_ajax";
@@ -37,22 +53,22 @@
 									<button type='button' class='close' data-dismiss='modal'>&times;</button>
 								</div>
 								<div class='modal-body'>
-									<form onsubmit='return edit_func($rows[u_id]);' id='form_clear'>
+									<form onsubmit='return edit_func($rows[u_id]);' id='reseting_edit_form$rows[u_id]'>
 										<div class='form-group'>
 											<label>Change name</label>
-											<input type='text' id='edit_name' class='form-control' required></input>
+											<input type='text' value='$rows[u_name]' id='edit_name$rows[u_id]' class='form-control' required></input>
 										</div>
 										<div class='form-group'>
 											<label>Change e-mail</label>
-											<input type='email' id='edit_email' class='form-control' required></input> 
+											<input type='email' value='$rows[u_email]' id='edit_email$rows[u_id]' class='form-control' required></input> 
 										</div>
 										<div class='form-group'>
 											<label>Change contact number</label>
-											<input type='text' id='edit_contact_number' class='form-control' required></input>
+											<input type='text' value='$rows[u_number]' id='edit_contact_number$rows[u_id]' class='form-control' required></input>
 										</div>
 										<div class='form-group'>
 											<label>Change notes</label>
-											<textarea class='form-control' id='edit_notes'></textarea>
+											<textarea class='form-control' value='$rows[u_notes]' id='edit_notes$rows[u_id]'></textarea>
 										</div>
 										<div class='form-group'>
 											<button type='button' class='btn btn-info btn-block btn-lg'>Done Editing</button>
